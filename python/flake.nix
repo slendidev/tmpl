@@ -39,10 +39,15 @@
             venvVersionWarn
           '';
 
-          packages = with python.pkgs; [
-            venvShellHook
-            uv
-          ];
+          packages =
+            with python.pkgs;
+            [
+              venvShellHook
+              uv
+            ]
+            ++ (with pkgs; [
+              pyright
+            ]);
         };
       }
     );
