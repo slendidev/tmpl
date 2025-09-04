@@ -2,7 +2,7 @@
   description = "My flake";
 
   inputs = {
-    inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
