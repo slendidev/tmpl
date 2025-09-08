@@ -12,24 +12,20 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       flake-utils,
+      fenix,
+      ...
     }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [
-            self.overlays.default
-          ];
-        };
-      in
-      {
-        overlays.default = final: prev: {
+    let
+      overlay =
+        final: prev:
+        let
+          fenixPkgs = fenix.packages.${final.system};
+        in
+        {
           rustToolchain =
-            with inputs.fenix.packages.${system};
+            with fenixPkgs;
             combine (
               with stable;
               [
@@ -41,9 +37,21 @@
               ]
             );
         };
-
+    in
+    {
+      overlays.default = overlay;
+    }
+    // flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ overlay ];
+        };
+      in
+      {
         devShells.default = pkgs.mkShell {
-          packages = [
+          packages = with pkgs; [
             rustToolchain
             openssl
             pkg-config
@@ -53,9 +61,9 @@
             rust-analyzer
           ];
 
-          env = {
-            RUST_SRC_PATH = "${pkgs.rustToolchain}/lib/rustlib/src/rust/library";
-          };
+          shellHook = ''
+            					export RUST_SRC_PATH="${pkgs.rustToolchain}/lib/rustlib/src/rust/library"
+            				'';
         };
       }
     );
