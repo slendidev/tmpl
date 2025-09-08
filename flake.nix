@@ -17,6 +17,10 @@
           path = ./python;
           description = "Python flake";
         };
+        rust = {
+          path = ./rust;
+          description = "Rust flake";
+        };
       };
     };
 }
