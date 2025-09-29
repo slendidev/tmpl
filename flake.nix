@@ -21,6 +21,10 @@
           path = ./rust;
           description = "Rust flake";
         };
+        odin = {
+          path = ./odin;
+          description = "Odin flake";
+        };
       };
     };
 }
