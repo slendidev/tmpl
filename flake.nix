@@ -25,6 +25,10 @@
           path = ./odin;
           description = "Odin flake";
         };
+        java = {
+          path = ./java;
+          description = "Java flake";
+        };
       };
     };
 }
