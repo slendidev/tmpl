@@ -29,6 +29,10 @@
           path = ./java;
           description = "Java flake";
         };
+        dotnet = {
+          path = ./dotnet;
+          description = "Dotnet flake";
+        };
       };
     };
 }

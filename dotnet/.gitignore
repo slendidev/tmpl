@@ -1,0 +1,7 @@
+result
+.direnv
+bin
+obj
+.idea
+.analyzerpackages
+*.DotSettings.user
