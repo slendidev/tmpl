@@ -23,30 +23,28 @@
         ];
       in
       {
-        devShells.default = pkgs.mkShell.override { stdenv = pkgs.llvmPackages_21.libcxxStdenv; } {
-          packages =
-            with pkgs;
-            [
-              llvmPackages_21.clang-tools
-              lldb
-              codespell
-              doxygen
-              gtest
-              cppcheck
-            ]
-            ++ buildInputs
-            ++ nativeBuildInputs
-            ++ pkgs.lib.optionals pkgs.stdenv.isLinux (
-              with pkgs;
-              [
-                valgrind-light
-              ]
-            );
-
-          env = { };
-
-          shellHook = '''';
-        };
+        devShells.default =
+          pkgs.mkShell.override { stdenv = pkgs.stdenvAdapters.useMoldLinker pkgs.gcc15Stdenv; }
+            {
+              packages =
+                with pkgs;
+                [
+                  llvmPackages_21.clang-tools
+                  lldb
+                  codespell
+                  doxygen
+                  gtest
+                  cppcheck
+                ]
+                ++ buildInputs
+                ++ nativeBuildInputs
+                ++ pkgs.lib.optionals pkgs.stdenv.isLinux (
+                  with pkgs;
+                  [
+                    valgrind-light
+                  ]
+                );
+            };
       }
     );
 }
