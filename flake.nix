@@ -33,6 +33,14 @@
           path = ./dotnet;
           description = "Dotnet flake";
         };
+        php = {
+          path = ./php;
+          description = "PHP flake";
+        };
+        laravel = {
+          path = ./laravel;
+          description = "Laravel flake";
+        };
       };
     };
 }
